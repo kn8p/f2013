@@ -1,0 +1,965 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>F2013 · Spelschema</title>
+<meta name="theme-color" content="#0E3B5C">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="F2013">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' fill='%230E3B5C'/%3E%3Cpath d='M180 20 A160 160 0 0 0 20 180' fill='none' stroke='%23ffffff' stroke-opacity='.45' stroke-width='6'/%3E%3Ctext x='90' y='108' font-family='Arial Narrow,Arial' font-weight='700' font-size='62' fill='%23fff' text-anchor='middle'%3EF13%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%230E3B5C'/%3E%3Ctext x='32' y='42' font-family='Arial Narrow,Arial' font-weight='700' font-size='26' fill='%23fff' text-anchor='middle'%3EF13%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --floor:#F3EEE3; --paper:#FFFFFF; --ink:#16181A; --muted:#6E7379;
+  --blue:#0E3B5C; --blue-soft:#E4EAF0; --green:#2C6E49; --green-soft:#E3EDE6;
+  --amber:#B5811F; --amber-soft:#F6ECD6; --alert:#A3341F; --alert-soft:#F7E3DE;
+  --rule:#D6CDBB; --hair:#E7E0D2;
+  --disp:"Barlow Condensed",Arial Narrow,sans-serif;
+  --body:"IBM Plex Sans",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--floor);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.5;
+  -webkit-text-size-adjust:100%}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
+:focus-visible{outline:2.5px solid var(--blue);outline-offset:2px;border-radius:2px}
+.wrap{max-width:820px;margin:0 auto;padding:0 18px}
+
+.top{position:sticky;top:0;z-index:40;background:var(--floor);border-bottom:1px solid var(--rule)}
+.top .wrap{display:flex;align-items:center;gap:14px;height:58px}
+.crest{font-family:var(--disp);font-weight:700;font-size:23px;line-height:1;white-space:nowrap}
+.crest span{color:var(--muted);font-weight:500}
+.top .spacer{flex:1}
+.picker{display:flex;align-items:center;gap:7px;background:var(--paper);border:1px solid var(--rule);
+  border-radius:999px;padding:5px 6px 5px 13px;max-width:56vw}
+.picker label{font-size:12px;color:var(--muted);white-space:nowrap}
+.picker select{font:inherit;font-size:14px;border:0;background:none;max-width:150px;padding:2px 4px;
+  cursor:pointer;color:var(--ink)}
+
+.hero{background:var(--blue);color:#fff;position:relative;overflow:hidden}
+.hero .wrap{position:relative;z-index:2;padding-top:26px;padding-bottom:28px}
+.hero .arc{position:absolute;right:-90px;top:-70px;width:340px;height:340px;z-index:1;opacity:.5;
+  pointer-events:none}
+.hero.easy{background:var(--green)}
+.kicker{font-size:12.5px;letter-spacing:.05em;color:#B9CBDA;margin:0 0 10px}
+.hero.easy .kicker{color:#BDD6C6}
+.hero-date{font-family:var(--disp);font-size:15px;font-weight:500;color:#D6E3EE;margin-bottom:2px}
+.hero.easy .hero-date{color:#D3E6D9}
+.hero h1{font-family:var(--disp);font-weight:600;font-size:clamp(29px,7vw,44px);line-height:1.02;
+  margin:0 0 6px}
+.hero .venue{font-size:14px;color:#C7D6E2;margin:0 0 18px}
+.hero.easy .venue{color:#C8DECF}
+.hero-status{display:inline-flex;align-items:center;gap:9px;background:rgba(255,255,255,.13);
+  border:1px solid rgba(255,255,255,.28);border-radius:999px;padding:7px 15px;font-size:14px}
+.hero-status .dot{width:8px;height:8px;border-radius:50%;background:#8FD6A6;flex:none}
+.hero-status.out .dot{background:#E9B7AC}
+.hero-acts{display:flex;flex-wrap:wrap;gap:16px;margin-top:14px}
+.hero-cta{font-size:14px;color:#fff;border-bottom:1px solid rgba(255,255,255,.5);padding-bottom:1px}
+
+.tabs{position:sticky;top:58px;z-index:30;background:var(--floor);border-bottom:1px solid var(--rule)}
+.tabs .wrap{display:flex;gap:2px}
+.tab{padding:13px 15px 11px;font-family:var(--disp);font-size:18px;font-weight:500;color:var(--muted);
+  border-bottom:3px solid transparent;margin-bottom:-1px}
+.tab[aria-selected=true]{color:var(--ink);border-bottom-color:var(--blue)}
+
+.bar{display:flex;flex-wrap:wrap;gap:8px;padding:16px 0 4px;align-items:center}
+.chip{border:1px solid var(--rule);background:var(--paper);border-radius:999px;padding:6px 13px;
+  font-size:13.5px;color:var(--muted)}
+.chip[aria-pressed=true]{background:var(--blue);border-color:var(--blue);color:#fff}
+.bar .note{font-size:13px;color:var(--muted);margin-left:auto}
+.swatch{display:inline-block;width:10px;height:10px;border-radius:2px;vertical-align:-1px;margin-right:5px}
+
+.month{font-family:var(--disp);font-size:15px;font-weight:600;color:var(--muted);padding:26px 0 7px;
+  letter-spacing:.03em}
+.courtline{height:4px;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);margin-bottom:2px}
+.match{background:var(--paper);border:1px solid var(--hair);border-left:4px solid var(--blue);
+  margin-top:8px;border-radius:3px}
+.match.easy{border-left-color:var(--green)}
+.match.past{opacity:.52}
+.mhead{display:flex;align-items:stretch;gap:14px;width:100%;text-align:left;padding:12px 14px}
+.daynum{font-family:var(--disp);font-size:31px;font-weight:600;line-height:.88;min-width:34px;padding-top:2px}
+.daywd{font-family:var(--disp);font-size:12.5px;color:var(--muted);line-height:1.1}
+.mbody{flex:1;min-width:0}
+.mteams{font-weight:500;font-size:15px;line-height:1.28}
+.mmeta{font-size:13px;color:var(--muted);margin-top:3px}
+.mright{display:flex;flex-direction:column;align-items:flex-end;gap:6px;flex:none}
+.mine-dot{display:flex;align-items:center;gap:5px;font-size:12.5px;color:var(--green);font-weight:500}
+.mine-dot i{width:7px;height:7px;border-radius:50%;background:var(--green);display:block}
+.mine-dot.out{color:var(--muted)}
+.mine-dot.out i{background:var(--rule)}
+.lvl{font-family:var(--disp);font-size:12.5px;font-weight:600;padding:2px 8px;border-radius:3px;
+  background:var(--blue-soft);color:var(--blue)}
+.lvl.easy{background:var(--green-soft);color:var(--green)}
+.chev{color:var(--muted);font-size:12px;transition:transform .18s ease}
+.match[data-open=true] .chev{transform:rotate(90deg)}
+
+.squad{display:none;border-top:1px solid var(--hair);padding:14px}
+.match[data-open=true] .squad{display:block}
+.sqrow{display:flex;gap:10px;padding:5px 0;align-items:baseline}
+.sqrole{font-family:var(--disp);font-size:13px;color:var(--muted);min-width:62px;flex:none;padding-top:2px}
+.sqnames{flex:1;font-size:14.5px;line-height:1.6}
+.pill{display:inline-block;padding:2px 9px;border-radius:999px;background:#F2EFE9;margin:0 5px 5px 0;
+  border:1px solid var(--hair)}
+.pill.gk{background:var(--amber-soft);border-color:#E8D5AC;color:#6B4B08;font-weight:500}
+.pill.me{background:var(--blue);border-color:var(--blue);color:#fff;font-weight:500}
+.leadrow{display:flex;gap:10px;padding:9px 0 3px;margin-top:6px;border-top:1px dashed var(--hair);
+  align-items:baseline}
+.leadrow .sqrole{color:var(--ink);font-weight:600}
+.lead{display:inline-block;padding:2px 10px;border-radius:3px;background:var(--blue);color:#fff;
+  font-size:13.5px;margin:0 5px 4px 0;font-weight:500}
+.lead.none{background:var(--alert-soft);color:var(--alert)}
+.sqfoot{margin-top:11px;padding-top:10px;border-top:1px dashed var(--hair);font-size:13px;
+  color:var(--muted);display:flex;flex-wrap:wrap;gap:14px;align-items:center}
+.link{color:var(--blue);border-bottom:1px solid #A9BDCD;padding-bottom:1px;font-size:13px}
+
+.plist{margin-top:14px}
+.prow{display:flex;align-items:center;gap:12px;background:var(--paper);border:1px solid var(--hair);
+  border-radius:3px;padding:11px 14px;margin-top:6px;width:100%;text-align:left}
+.pname{font-weight:500;flex:1;min-width:0}
+.ppos{font-family:var(--disp);font-size:13.5px;color:var(--muted);min-width:38px}
+.pcount{font-family:var(--disp);font-size:20px;font-weight:600;min-width:26px;text-align:right}
+.pcount small{font-family:var(--body);font-size:11.5px;color:var(--muted);font-weight:400;display:block;
+  line-height:1.1;margin-top:-2px}
+.pbar{display:flex;height:6px;border-radius:3px;overflow:hidden;width:74px;flex:none;background:#EAE4D7}
+.pbar i{display:block;height:100%}
+
+.panel{background:var(--paper);border:1px solid var(--hair);border-radius:3px;padding:16px;margin-top:14px}
+.panel h3{font-family:var(--disp);font-size:20px;font-weight:600;margin:0 0 3px}
+.panel p.sub{font-size:13.5px;color:var(--muted);margin:0 0 14px}
+select.full,input.full{width:100%;font:inherit;padding:9px 10px;border:1px solid var(--rule);
+  border-radius:3px;background:var(--paper)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(158px,1fr));gap:6px;margin-top:6px}
+.pick{display:flex;align-items:center;gap:9px;border:1px solid var(--hair);border-radius:3px;
+  padding:8px 10px;font-size:14px;background:var(--paper);text-align:left;width:100%}
+.pick[aria-pressed=true]{border-color:var(--blue);background:var(--blue-soft)}
+.pick.gk[aria-pressed=true]{border-color:var(--amber);background:var(--amber-soft)}
+.pick .lv{font-family:var(--disp);font-size:12.5px;color:var(--muted);margin-left:auto;flex:none}
+.pick .ld{font-size:11px;color:var(--blue);font-weight:600;margin-left:auto;flex:none}
+.pick.dim{opacity:.45}
+.grouphd{font-family:var(--disp);font-size:14px;color:var(--muted);margin:14px 0 2px}
+.warn{border-left:3px solid var(--alert);background:var(--alert-soft);padding:9px 12px;font-size:13.5px;
+  margin-top:7px;border-radius:0 3px 3px 0}
+.warn.ok{border-left-color:var(--green);background:var(--green-soft)}
+.btn{background:var(--blue);color:#fff;border-radius:3px;padding:9px 16px;font-size:14px;font-weight:500}
+.btn.ghost{background:none;color:var(--blue);border:1px solid var(--rule)}
+.btnrow{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.toggle{display:flex;align-items:center;gap:9px;font-size:14px;cursor:pointer}
+.toggle input{width:17px;height:17px;accent-color:var(--blue)}
+.edited{font-family:var(--disp);font-size:12.5px;color:var(--amber);font-weight:600}
+.foot{padding:34px 0 46px;font-size:12.5px;color:var(--muted);line-height:1.65}
+.foot b{color:var(--ink);font-weight:600}
+.toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:var(--ink);color:#fff;
+  padding:10px 18px;border-radius:999px;font-size:14px;z-index:90;opacity:0;pointer-events:none;
+  transition:opacity .2s ease}
+.toast.show{opacity:1}
+.empty{background:var(--paper);border:1px dashed var(--rule);border-radius:3px;padding:26px 18px;
+  text-align:center;color:var(--muted);font-size:14px;margin-top:14px}
+.lock{max-width:390px;margin:36px auto 0}
+.sheet{position:fixed;inset:0;z-index:80;background:rgba(12,20,28,.5);display:flex;
+  align-items:flex-end;justify-content:center;padding:16px}
+.sheet .card{background:var(--paper);border-radius:8px;padding:20px;max-width:420px;width:100%}
+.sheet h3{font-family:var(--disp);font-size:22px;margin:0 0 4px}
+.sheet ol{margin:12px 0 0;padding-left:20px;font-size:14.5px;line-height:1.75}
+.sheet .shareicon{display:inline-block;width:15px;height:15px;vertical-align:-2px;
+  border:1.6px solid var(--blue);border-top:0;border-radius:0 0 3px 3px;position:relative;margin:0 2px}
+.sheet .shareicon::after{content:"";position:absolute;left:5.2px;top:-9px;width:1.6px;height:9px;
+  background:var(--blue)}
+.sheet .shareicon::before{content:"";position:absolute;left:2.2px;top:-6.5px;width:7px;height:7px;
+  border-left:1.6px solid var(--blue);border-top:1.6px solid var(--blue);transform:rotate(45deg)}
+.cnt{font-family:var(--disp);font-size:15px;font-weight:600;margin-left:auto;flex:none;
+  min-width:22px;text-align:right;color:var(--muted)}
+.cnt.low{color:var(--green)}
+.cnt.high{color:var(--amber)}
+.pick .meta{display:block;font-size:11.5px;color:var(--muted);line-height:1.25;margin-top:1px}
+.pick .nm{display:block;line-height:1.2}
+.pick .txt{flex:1;min-width:0}
+.dutyrow{display:flex;gap:10px;padding:5px 0;align-items:baseline}
+.dutyrow .sqrole{color:var(--ink);font-weight:600}
+.duty{display:inline-block;padding:2px 9px;border-radius:3px;background:var(--amber-soft);
+  border:1px solid #E8D5AC;color:#6B4B08;font-size:13.5px;margin:0 5px 4px 0}
+.duty.me{background:var(--amber);border-color:var(--amber);color:#fff;font-weight:600}
+.duty.none{background:var(--alert-soft);border-color:#EAC6BD;color:var(--alert)}
+.dutyhd{display:flex;align-items:baseline;gap:8px;margin:12px 0 2px;padding-top:10px;
+  border-top:1px dashed var(--hair)}
+.dutyhd h4{font-family:var(--disp);font-size:16px;font-weight:600;margin:0}
+.dutyhd span{font-size:12.5px;color:var(--muted)}
+.mine-duty{display:flex;align-items:center;gap:5px;font-size:12.5px;color:var(--amber);
+  font-weight:600}
+.score{font-family:var(--disp);font-size:19px;font-weight:700;letter-spacing:.01em;
+  padding:1px 9px;border-radius:3px;background:#EFEBE1;color:var(--ink)}
+.score.V{background:var(--green);color:#fff}
+.score.F{background:var(--alert-soft);color:var(--alert)}
+.score.O{background:#E6E2D8;color:var(--ink)}
+.reslist{margin-top:6px}
+.resrow{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid var(--hair)}
+.resrow .rd{font-family:var(--disp);font-size:13px;color:var(--muted);min-width:52px}
+.resrow .rm{flex:1;font-size:13.5px;min-width:0}
+.resrow input{width:46px;font:inherit;font-size:15px;text-align:center;padding:5px 2px;
+  border:1px solid var(--rule);border-radius:3px;background:var(--paper)}
+.resrow .sep{color:var(--muted)}
+textarea.full{width:100%;font:inherit;font-size:13px;padding:9px 10px;border:1px solid var(--rule);
+  border-radius:3px;min-height:82px;font-family:ui-monospace,Menlo,Consolas,monospace}
+.pubrow{display:flex;align-items:center;gap:12px;padding:7px 0;border-bottom:1px solid var(--hair)}
+.pubname{font-family:var(--disp);font-size:17px;font-weight:600;min-width:130px}
+.pubname.past{color:var(--muted);font-weight:400}
+.pubmeta{font-size:13px;color:var(--muted);flex:1}
+.dsel{display:flex;flex-wrap:wrap;gap:6px;margin-top:5px}
+.dbtn{border:1px solid var(--hair);border-radius:3px;padding:6px 11px;font-size:13.5px;
+  background:var(--paper)}
+.dbtn[aria-pressed=true]{border-color:var(--amber);background:var(--amber-soft);font-weight:500}
+.dbtn small{color:var(--muted);font-weight:400;margin-left:5px}
+.scale{display:flex;align-items:center;gap:6px;font-size:12.5px;color:var(--muted);margin-top:10px}
+@media (max-width:520px){
+  .top .wrap{height:54px;gap:9px}.crest{font-size:20px}.tabs{top:54px}
+  .mhead{gap:11px;padding:11px 12px}.daynum{font-size:27px;min-width:30px}.sqrole{min-width:54px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<header class="top">
+  <div class="wrap">
+    <div class="crest">F2013 <span>· Alingsås HK</span></div>
+    <div class="spacer"></div>
+    <button class="chip" id="install" hidden style="padding:6px 12px">Installera</button>
+    <div class="picker">
+      <label for="me">Min spelare</label>
+      <select id="me"></select>
+    </div>
+  </div>
+</header>
+
+<section class="hero" id="hero"></section>
+
+<nav class="tabs">
+  <div class="wrap" role="tablist">
+    <button class="tab" role="tab" data-view="matcher" aria-selected="true">Matcher</button>
+    <button class="tab" role="tab" data-view="spelare" aria-selected="false">Spelare</button>
+    <button class="tab" role="tab" data-view="tranare" aria-selected="false">Tränarläge</button>
+  </div>
+</nav>
+
+<main class="wrap" id="main"></main>
+<div class="toast" id="toast"></div>
+
+<script>
+const DATA = {"players":[{"i":0,"f":"Freya","l":"Henley Hellström","s":"Freya","pos":"MV","avg":1.0,"grp":"A","role":"MV"},{"i":1,"f":"Irma","l":"Stål","s":"Irma St.","pos":"MV","avg":2.0,"grp":"B","role":"MV"},{"i":2,"f":"Irma","l":"Segerberg","s":"Irma Se.","pos":"MV","avg":3.75,"grp":"D","role":"MV"},{"i":3,"f":"Nilla","l":"Davidsson","s":"Nilla","pos":"MV","avg":4.0,"grp":"D","role":"MV"},{"i":4,"f":"Ella","l":"Fridberg","s":"Ella","pos":"9M","avg":1.0,"grp":"A","role":"nia"},{"i":5,"f":"Alicia","l":"Enström","s":"Alicia","pos":"9M","avg":1.25,"grp":"A","role":"nia"},{"i":6,"f":"Gloria","l":"Klintefelt","s":"Gloria","pos":"M6","avg":1.5,"grp":"B","role":"sexa"},{"i":7,"f":"Sara","l":"Salkic","s":"Sara","pos":"9M","avg":1.5,"grp":"B","role":"nia"},{"i":8,"f":"Tyra","l":"Benjaminsson","s":"Tyra B.","pos":"H6","avg":1.5,"grp":"B","role":"kant"},{"i":9,"f":"Tyra","l":"Carlsson","s":"Tyra C.","pos":"V6","avg":1.75,"grp":"B","role":"kant"},{"i":10,"f":"Felicia","l":"Sjöberg","s":"Felicia","pos":"9M","avg":2.0,"grp":"B","role":"nia"},{"i":11,"f":"Lovisa","l":"Laggren","s":"Lovisa","pos":"M6","avg":2.0,"grp":"B","role":"sexa"},{"i":12,"f":"Thilda","l":"Kangas","s":"Thilda","pos":"9M","avg":2.0,"grp":"B","role":"nia"},{"i":13,"f":"Tilde","l":"Knoop","s":"Tilde","pos":"9M","avg":2.0,"grp":"B","role":"nia"},{"i":14,"f":"Anna-Lisa","l":"Styrud","s":"Anna-Lisa","pos":"9M","avg":2.5,"grp":"C","role":"nia"},{"i":15,"f":"Chloé","l":"Flodén","s":"Chloé","pos":"M6","avg":3.0,"grp":"C","role":"sexa"},{"i":16,"f":"Klara","l":"Bjurhede","s":"Klara","pos":"M6","avg":3.0,"grp":"C","role":"sexa"},{"i":17,"f":"Lova","l":"Wängvik","s":"Lova","pos":"V6","avg":3.0,"grp":"C","role":"kant"},{"i":18,"f":"Ester","l":"Eliasson","s":"Ester","pos":"V6","avg":3.25,"grp":"C","role":"kant"},{"i":19,"f":"Rihanna","l":"Jan Ali","s":"Rihanna","pos":"V6","avg":3.75,"grp":"D","role":"kant"},{"i":20,"f":"Iza","l":"Aydin","s":"Iza","pos":"V6","avg":4.0,"grp":"D","role":"kant"},{"i":21,"f":"Lykke","l":"Van Eijsden","s":"Lykke","pos":"H6","avg":4.0,"grp":"D","role":"kant"},{"i":22,"f":"Maja","l":"Jiveland","s":"Maja","pos":"V6","avg":4.0,"grp":"D","role":"kant"},{"i":23,"f":"Sigrid","l":"Alströmer","s":"Sigrid","pos":"V6","avg":4.0,"grp":"D","role":"kant"}],"units":[{"id":"S01","lvl":"S","date":"2026-10-04","day":"Söndag","venue":"Östlyckehallen Alingsås","home":true,"m":[{"t":"13:15","h":"Alingsås HK 1","a":"IK Sävehof 1","nr":"26 5 1341 004"}],"sq":[1,4,5,7,8,9,10,11,12,13,15],"duty":{"Kiosk":[8,9],"Matchvärd":[7],"Sekretariat":[1,15]}},{"id":"L01","lvl":"L","date":"2026-10-10","day":"Lördag","venue":"Öjersjöhallen, Partille","home":false,"m":[{"t":"14:05","h":"HK Lidköping 2","a":"Alingsås HK 2","nr":"26 5 1343 002"},{"t":"15:35","h":"IK Sävehof 2","a":"Alingsås HK 2","nr":"26 5 1343 003"}],"sq":[2,10,14,15,17,18,20,21,22,23],"duty":{"Körning":[2,17,23]}},{"id":"S02","lvl":"S","date":"2026-10-11","day":"Söndag","venue":"Hjällsnäshallen B, Gråbo","home":false,"m":[{"t":"13:25","h":"IK Baltichov blå","a":"Alingsås HK 1","nr":"26 5 1341 006"}],"sq":[1,4,5,6,7,8,9,11,12,13,14],"duty":{"Körning":[1,6,14]}},{"id":"S03","lvl":"S","date":"2026-10-24","day":"Lördag","venue":"Alströmerhallen, Alingsås","home":true,"m":[{"t":"13:00","h":"Alingsås HK 1","a":"HK Aranäs Vit","nr":"26 5 1341 014"}],"sq":[1,4,5,6,7,8,9,11,14,15,17],"duty":{"Kiosk":[7,14],"Matchvärd":[17],"Sekretariat":[1,15]}},{"id":"L02","lvl":"L","date":"2026-10-25","day":"Söndag","venue":"Torsbohallen, Trollhättan","home":false,"m":[{"t":"10:00","h":"KFUM Trollhättan Nord","a":"Alingsås HK 2","nr":"26 5 1343 011"},{"t":"11:20","h":"Alingsås HK 2","a":"GF Kroppskultur 2","nr":"26 5 1343 012"}],"sq":[1,6,13,14,15,17,19,21,22,23],"duty":{"Körning":[17,21,22]}},{"id":"S04","lvl":"S","date":"2026-11-07","day":"Lördag","venue":"Habo Sporthall C","home":false,"m":[{"t":"12:45","h":"Habo HK Vit","a":"Alingsås HK 1","nr":"26 5 1341 020"}],"sq":[1,4,5,6,7,8,9,10,12,14,15],"duty":{"Körning":[1,14,15]}},{"id":"L03","lvl":"L","date":"2026-11-08","day":"Söndag","venue":"Östlyckehallen Alingsås","home":true,"m":[{"t":"12:00","h":"Alingsås HK 2","a":"Stenungsunds HK Svart","nr":"26 5 1343 021"}],"sq":[2,6,9,10,14,16,17,18,21,22],"duty":{"Kiosk":[2,16],"Matchvärd":[22],"Sekretariat":[14,21]}},{"id":"S05","lvl":"S","date":"2026-11-15","day":"Söndag","venue":"Skara Idrottshall","home":false,"m":[{"t":"13:00","h":"Skara HF Vit","a":"Alingsås HK 1","nr":"26 5 1341 023"}],"sq":[1,4,5,6,7,8,9,11,12,13,18],"duty":{"Körning":[1,11,18]}},{"id":"S06","lvl":"S","date":"2026-11-22","day":"Söndag","venue":"Nolhagahallen","home":true,"m":[{"t":"11:15","h":"Alingsås HK 1","a":"HK Country Röd","nr":"26 5 1341 026"}],"sq":[0,4,5,6,8,10,11,12,13,17,18],"duty":{"Kiosk":[0,17],"Matchvärd":[18],"Sekretariat":[6,8]}},{"id":"L04","lvl":"L","date":"2026-11-22","day":"Söndag","venue":"Idrottens Hus TH 1, Lidköping","home":false,"m":[{"t":"15:45","h":"IK Sävehof 2","a":"Alingsås HK 2","nr":"26 5 1343 023"},{"t":"17:00","h":"HK Lidköping 2","a":"Alingsås HK 2","nr":"26 5 1343 024"}],"sq":[3,7,9,14,16,19,20,21,22,23],"duty":{"Körning":[3,21,23]}},{"id":"S07","lvl":"S","date":"2026-11-28","day":"Lördag","venue":"Skövde Idrottshall","home":false,"m":[{"t":"16:45","h":"Skövde HF","a":"Alingsås HK 1","nr":"26 5 1341 031"}],"sq":[1,4,5,6,8,9,10,11,12,13,17],"duty":{"Körning":[1,11,17]}},{"id":"L05","lvl":"L","date":"2026-12-05","day":"Lördag","venue":"Nolhagahallen","home":true,"m":[{"t":"10:00","h":"Alingsås HK 2","a":"Kärra HF 2","nr":"26 5 1343 032"},{"t":"14:15","h":"Alingsås HK 2","a":"Kungälvs HK Grön","nr":"26 5 1343 034"}],"sq":[3,12,14,16,17,19,20,21,22,23],"duty":{"Kiosk":[19,23],"Matchvärd":[3],"Sekretariat":[21,22]}},{"id":"S08","lvl":"S","date":"2026-12-05","day":"Lördag","venue":"Nolhagahallen","home":true,"m":[{"t":"15:15","h":"Alingsås HK 1","a":"Önnereds HK Grön","nr":"26 5 1341 037"}],"sq":[0,4,5,6,7,8,9,10,11,13,18],"duty":{"Kiosk":[6,9],"Matchvärd":[0],"Sekretariat":[7,18]}},{"id":"L06","lvl":"L","date":"2026-12-20","day":"Söndag","venue":"Angered Arena","home":false,"m":[{"t":"09:30","h":"Kärra HF 2","a":"Alingsås HK 2","nr":"26 5 1343 036"},{"t":"11:20","h":"Alingsås HK 2","a":"Kungälvs HK Grön","nr":"26 5 1343 037"}],"sq":[2,7,13,15,17,18,19,20,21,23],"duty":{"Körning":[2,19,23]}},{"id":"S09","lvl":"S","date":"2026-12-20","day":"Söndag","venue":"Rosendalshallen A Göteborg","home":false,"m":[{"t":"11:40","h":"Redbergslids IK Vit","a":"Alingsås HK 1","nr":"26 5 1341 044"}],"sq":[0,4,5,6,8,9,10,11,12,14,16],"duty":{"Körning":[8,14,16]}},{"id":"S10","lvl":"S","date":"2027-01-09","day":"Lördag","venue":"Östlyckehallen Alingsås","home":true,"m":[{"t":"11:00","h":"Alingsås HK 1","a":"Redbergslids IK Vit","nr":"26 5 1341 048"}],"sq":[0,4,5,6,7,8,9,11,12,13,17],"duty":{"Kiosk":[7,17],"Matchvärd":[8],"Sekretariat":[9,11]}},{"id":"L07","lvl":"L","date":"2027-01-09","day":"Lördag","venue":"Hallerna Idrottshall","home":false,"m":[{"t":"18:00","h":"Stenungsunds HK Svart","a":"Alingsås HK 2","nr":"26 5 1343 049"}],"sq":[3,10,14,15,18,19,20,21,22,23],"duty":{"Körning":[3,19,22]}},{"id":"S11","lvl":"S","date":"2027-01-17","day":"Söndag","venue":"ÖHK Gbg Brandservichallen","home":false,"m":[{"t":"12:15","h":"Önnereds HK Grön","a":"Alingsås HK 1","nr":"26 5 1341 055"}],"sq":[0,4,5,6,7,8,9,10,11,12,13],"duty":{"Körning":[6,7,11]}},{"id":"S12","lvl":"S","date":"2027-01-23","day":"Lördag","venue":"Östlyckehallen Alingsås","home":true,"m":[{"t":"11:00","h":"Alingsås HK 1","a":"Skövde HF","nr":"26 5 1341 057"}],"sq":[1,4,5,6,7,8,9,11,13,16,18],"duty":{"Kiosk":[1,18],"Matchvärd":[9],"Sekretariat":[11,16]}},{"id":"L08","lvl":"L","date":"2027-01-24","day":"Söndag","venue":"Östlyckehallen Alingsås","home":true,"m":[{"t":"10:00","h":"Alingsås HK 2","a":"KFUM Trollhättan Nord","nr":"26 5 1343 050"},{"t":"14:00","h":"Alingsås HK 2","a":"GF Kroppskultur 2","nr":"26 5 1343 052"}],"sq":[2,7,12,16,17,18,19,20,21,23],"duty":{"Kiosk":[19,21],"Matchvärd":[23],"Sekretariat":[2,16]}},{"id":"S13","lvl":"S","date":"2027-01-31","day":"Söndag","venue":"Frösvehallen Stöpen","home":false,"m":[{"t":"13:00","h":"HK Country Röd","a":"Alingsås HK 1","nr":"26 5 1341 062"}],"sq":[0,4,5,6,7,8,9,10,11,14,15],"duty":{"Körning":[0,14,15]}},{"id":"S14","lvl":"S","date":"2027-02-06","day":"Lördag","venue":"Östlyckehallen Alingsås","home":true,"m":[{"t":"11:00","h":"Alingsås HK 1","a":"Skara HF Vit","nr":"26 5 1341 066"}],"sq":[0,4,5,6,8,9,10,11,12,13,16],"duty":{"Kiosk":[9,16],"Matchvärd":[8],"Sekretariat":[6,11]}},{"id":"L09","lvl":"L","date":"2027-02-07","day":"Söndag","venue":"Kungälvs Idrottshall","home":false,"m":[{"t":"13:40","h":"Kungälvs HK Grön","a":"Alingsås HK 2","nr":"26 5 1343 060"},{"t":"15:30","h":"Alingsås HK 2","a":"Kärra HF 2","nr":"26 5 1343 061"}],"sq":[3,10,13,15,16,18,19,20,22,23],"duty":{"Körning":[3,19,22]}},{"id":"S15","lvl":"S","date":"2027-02-28","day":"Söndag","venue":"Östlyckehallen Alingsås","home":true,"m":[{"t":"10:00","h":"Alingsås HK 1","a":"Habo HK Vit","nr":"26 5 1341 074"}],"sq":[0,4,5,6,7,8,9,10,11,12,16],"duty":{"Kiosk":[8,16],"Matchvärd":[0],"Sekretariat":[7,9]}},{"id":"L10","lvl":"L","date":"2027-03-06","day":"Lördag","venue":"Torsbohallen, Trollhättan","home":false,"m":[{"t":"10:00","h":"KFUM Trollhättan Nord","a":"Alingsås HK 2","nr":"26 5 1343 067"},{"t":"11:20","h":"Alingsås HK 2","a":"GF Kroppskultur 2","nr":"26 5 1343 068"}],"sq":[2,11,12,14,15,18,19,20,21,22],"duty":{"Körning":[2,18,19]}},{"id":"S16","lvl":"S","date":"2027-03-07","day":"Söndag","venue":"Forsgläntans IH","home":false,"m":[{"t":"16:45","h":"HK Aranäs Vit","a":"Alingsås HK 1","nr":"26 5 1341 076"}],"sq":[0,4,5,6,7,8,9,11,12,13,16],"duty":{"Körning":[0,11,16]}},{"id":"S17","lvl":"S","date":"2027-03-14","day":"Söndag","venue":"Alströmerhallen, Alingsås","home":true,"m":[{"t":"11:00","h":"Alingsås HK 1","a":"IK Baltichov blå","nr":"26 5 1341 084"}],"sq":[0,4,5,6,7,8,9,10,11,12,15],"duty":{"Kiosk":[9,15],"Matchvärd":[8],"Sekretariat":[0,6]}},{"id":"L11","lvl":"L","date":"2027-03-14","day":"Söndag","venue":"Alströmerhallen, Alingsås","home":true,"m":[{"t":"15:15","h":"Alingsås HK 2","a":"Stenungsunds HK Svart","nr":"26 5 1343 077"}],"sq":[3,13,14,16,17,19,20,21,22,23],"duty":{"Kiosk":[21,22],"Matchvärd":[19],"Sekretariat":[3,23]}},{"id":"L12","lvl":"L","date":"2027-03-21","day":"Söndag","venue":"Idrottens Hus TH 1, Lidköping","home":false,"m":[{"t":"15:50","h":"IK Sävehof 2","a":"Alingsås HK 2","nr":"26 5 1343 079"},{"t":"16:55","h":"HK Lidköping 2","a":"Alingsås HK 2","nr":"26 5 1343 080"}],"sq":[3,8,10,14,15,16,19,20,22,23],"duty":{"Körning":[3,15,22]}},{"id":"S18","lvl":"S","date":"2027-03-21","day":"Söndag","venue":"Partille Arena B","home":false,"m":[{"t":"18:25","h":"IK Sävehof 1","a":"Alingsås HK 1","nr":"26 5 1341 087"}],"sq":[1,4,5,6,7,9,11,12,13,17,18],"duty":{"Körning":[7,17,18]}}]};
+const KEY_SQ   = "f2013:squads:v2";     // shared
+const KEY_DU   = "f2013:duties:v1";     // shared
+const KEY_PUB  = "f2013:published:v1";  // shared
+const KEY_RES  = "f2013:results:v1";    // shared
+const OSS = "Alingsås";                 // känner igen våra egna lag
+const KEY_PW   = "f2013:pwhash:v1";     // shared
+const KEY_ME   = "f2013:myplayer:v1";   // personal
+const KEY_UNLK = "f2013:unlocked:v1";   // personal
+const TODAY    = new Date().toISOString().slice(0,10);
+const DEFAULT_PW = "handboll2026";
+const MATCH_MIN  = 60;                  // kalenderhändelsens längd
+
+/* ledare = förälder till spelaren */
+const LEADERS = {
+  "Tilde Knoop":"Erik", "Alicia Enström":"Marcus", "Ella Fridberg":"Andreas",
+  "Iza Aydin":"Björn",  "Felicia Sjöberg":"Jehona", "Thilda Kangas":"Ville"
+};
+
+const P = DATA.players, U = DATA.units;
+const byId = Object.fromEntries(P.map(p => [p.i, p]));
+const LEAD_BY_ID = Object.fromEntries(
+  P.filter(p => LEADERS[p.f + " " + p.l]).map(p => [p.i, LEADERS[p.f + " " + p.l]]));
+const MONTHS = ["januari","februari","mars","april","maj","juni","juli",
+                "augusti","september","oktober","november","december"];
+const ROLE_LABEL = {MV:"Målvakt", nia:"Nior", sexa:"Mittsexor", kant:"Kanter"};
+const DUTY_HOME = {Kiosk:2, Matchvärd:1, Sekretariat:2};
+const DUTY_AWAY = {Körning:3};
+const dutyNeed = u => u.home ? DUTY_HOME : DUTY_AWAY;
+const RULES = {S:{field:10,minNia:4,minSexa:1,minKant:2}, L:{field:9,minNia:2,minSexa:1,minKant:3}};
+
+let squads={}, base={}, duties={}, dbase={}, published={}, results={};
+let me=null, view="matcher", openUnit=null;
+let editUnit=null, showLevels=false, mineOnly=false, unlocked=false, pwHash=null;
+let sortByCount=false;
+let memStore={};
+
+async function sGet(k,sh){ try{const r=await window.storage.get(k,sh);return r?r.value:null;}
+  catch(e){return memStore[k]??null;} }
+async function sSet(k,v,sh){ memStore[k]=v; try{await window.storage.set(k,v,sh);}catch(e){} }
+async function sha(txt){
+  const b = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(txt));
+  return [...new Uint8Array(b)].map(x => x.toString(16).padStart(2,"0")).join("");
+}
+
+/* ---------- helpers ---------- */
+const nameOf  = p => p.s;                       // kortnamn överallt i gränssnittet
+const fullOf  = p => p.f + " " + p.l;
+const unitOf  = id => U.find(u => u.id === id);
+const gamesIn = u => u.m.length;
+const fmtDate = d => { const [y,m,dd]=d.split("-").map(Number);
+  return dd + " " + MONTHS[m-1].slice(0,3); };
+const weekday = u => (u.day||"").slice(0,3).toLowerCase();
+const gksOf   = uid => (squads[uid]||[]).map(i=>byId[i]).filter(p=>p.pos==="MV");
+const fldOf   = uid => (squads[uid]||[]).map(i=>byId[i]).filter(p=>p.pos!=="MV");
+const leadersOf = uid => [...new Set((squads[uid]||[]).map(i=>LEAD_BY_ID[i]).filter(Boolean))];
+const eligDuty  = uid => (squads[uid]||[]).filter(i=>!LEAD_BY_ID[i]);
+function dutyOf(uid,r){ return (duties[uid]&&duties[uid][r])||[]; }
+function myDuty(uid){ if(me===null) return null;
+  for(const r of Object.keys(dutyNeed(unitOf(uid)))) if(dutyOf(uid,r).includes(me)) return r;
+  return null; }
+const resOf = m => results[m.nr] || null;
+function outcome(m){
+  const r=resOf(m); if(!r) return null;
+  const ours = m.h.includes(OSS) ? r.h : r.a, theirs = m.h.includes(OSS) ? r.a : r.h;
+  return {ours, theirs, res: ours>theirs?"V":ours<theirs?"F":"O"};
+}
+function record(list){
+  const o={V:0,O:0,F:0,gf:0,ga:0,n:0};
+  for(const u of list) for(const m of u.m){ const x=outcome(m); if(!x) continue;
+    o[x.res]++; o.gf+=x.ours; o.ga+=x.theirs; o.n++; }
+  return o;
+}
+const monthKey = u => u.date.slice(0,7);
+const monthName = k => { const [y,m]=k.split("-"); return MONTHS[+m-1]+" "+y; };
+const isPub = u => published[monthKey(u)]===true;
+const pubUnits = () => U.filter(isPub);
+function monthList(){
+  const o=[];
+  for(const u of U){ const k=monthKey(u);
+    let e=o.find(x=>x.k===k);
+    if(!e){ e={k,units:0,games:0,past:true}; o.push(e); }
+    e.units++; e.games+=gamesIn(u); if(u.date>=TODAY) e.past=false; }
+  return o;
+}
+function dutyCount(pid,pubOnly){ let n=0;
+  for(const u of U){ if(pubOnly&&!isPub(u)) continue;
+    for(const r of Object.keys(dutyNeed(u))) if(dutyOf(u.id,r).includes(pid)) n++; }
+  return n; }
+function dutyByRole(pid){ const o={};
+  for(const u of U) for(const r of Object.keys(dutyNeed(u)))
+    if(dutyOf(u.id,r).includes(pid)) o[r]=(o[r]||0)+1;
+  return o; }
+
+function counts(pid,pubOnly){ let s=0,l=0;
+  for(const u of U){ if(pubOnly&&!isPub(u)) continue;
+    if((squads[u.id]||[]).includes(pid)) u.lvl==="S"?s+=gamesIn(u):l+=gamesIn(u); }
+  return {s,l,t:s+l}; }
+function isEdited(uid){
+  if([...(squads[uid]||[])].sort((a,b)=>a-b).join(",") !==
+     [...(base[uid]||[])].sort((a,b)=>a-b).join(",")) return true;
+  return JSON.stringify(duties[uid]||{})!==JSON.stringify(dbase[uid]||{}); }
+function toast(m){ const t=document.getElementById("toast"); t.textContent=m;
+  t.classList.add("show"); clearTimeout(t._h); t._h=setTimeout(()=>t.classList.remove("show"),2300); }
+
+/* ---------- validering ---------- */
+function problems(uid){
+  const u=unitOf(uid), R=RULES[u.lvl], out=[];
+  const gks=gksOf(uid), fld=fldOf(uid), sq=[...gks,...fld];
+  if(!gks.length) out.push("Ingen målvakt uttagen.");
+  if(fld.length!==R.field)
+    out.push(fld.length+" utespelare, ska vara "+R.field+
+             " (6 på plan + "+(R.field-6)+" avbytare).");
+  const n=r=>fld.filter(p=>p.role===r).length;
+  if(n("nia") <R.minNia)  out.push("Bara "+n("nia")+" nior, minst "+R.minNia+" behövs.");
+  if(n("sexa")<R.minSexa) out.push("Ingen mittsexa uttagen.");
+  if(n("kant")<R.minKant) out.push("Bara "+n("kant")+" kanter, minst "+R.minKant+" behövs.");
+  const need=dutyNeed(u), el=eligDuty(uid);
+  const taken=[];
+  for(const r of Object.keys(need)){
+    const got=dutyOf(uid,r);
+    if(got.length!==need[r])
+      out.push(r+": "+got.length+" av "+need[r]+" föräldrar tillsatta.");
+    for(const i of got){
+      if(!el.includes(i)) out.push(nameOf(byId[i])+"s förälder har uppdrag men barnet spelar inte.");
+      if(taken.includes(i)) out.push(nameOf(byId[i])+"s förälder har två uppdrag samma dag.");
+      taken.push(i);
+    }
+  }
+  if(el.length<Object.values(need).reduce((a,b)=>a+b,0))
+    out.push("Bara "+el.length+" behöriga föräldrar i truppen – för få för alla uppdrag.");
+  if(!leadersOf(uid).length)
+    out.push("Ingen ledare – ingen av ledarnas barn är uttagen i den här matchen.");
+  for(const p of sq){
+    if(p.grp==="A"&&u.lvl==="L") out.push(nameOf(p)+" är nivå 1 och ska bara spela svåra matcher.");
+    if(p.grp==="D"&&u.lvl==="S") out.push(nameOf(p)+" är nivå 4 och ska bara spela lätta matcher.");
+  }
+  for(const o of U){ if(o.id===uid||o.date!==u.date) continue;
+    for(const p of sq) if((squads[o.id]||[]).includes(p.i))
+      out.push(nameOf(p)+" är uttagen i två matcher samma dag."); }
+  for(const p of sq){ const c=counts(p.i);
+    if(p.grp==="B"&&c.l>8) out.push(nameOf(p)+" har "+c.l+" lätta matcher (taket är 8).");
+    if(p.grp==="C"&&c.s>5) out.push(nameOf(p)+" har "+c.s+" svåra matcher (taket är 5)."); }
+  return [...new Set(out)];
+}
+
+/* ---------- kalender ---------- */
+const pad = n => String(n).padStart(2,"0");
+function icsStamp(date,time,addMin){
+  const [y,m,d]=date.split("-").map(Number), [hh,mm]=time.split(":").map(Number);
+  const dt=new Date(y,m-1,d,hh,mm+(addMin||0));
+  return dt.getFullYear()+pad(dt.getMonth()+1)+pad(dt.getDate())+"T"+
+         pad(dt.getHours())+pad(dt.getMinutes())+"00";
+}
+const esc = s => String(s).replace(/([,;\\])/g,"\\$1").replace(/\n/g,"\\n");
+function icsEvents(units){
+  const L=["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//F2013//Spelschema//SV","CALSCALE:GREGORIAN"];
+  for(const u of units) for(const m of u.m){
+    const sq=[...gksOf(u.id),...fldOf(u.id)].map(nameOf).sort((a,b)=>a.localeCompare(b,"sv"));
+    const led=leadersOf(u.id);
+    const dut=Object.keys(dutyNeed(u)).map(r=>r+": "+
+      (dutyOf(u.id,r).map(i=>nameOf(byId[i])).join(", ")||"ingen")).join("\n");
+    const desc="Trupp: "+sq.join(", ")+"\nLedare: "+(led.length?led.join(", "):"saknas")+
+               "\n\n"+(u.home?"Föräldrauppdrag":"Körning")+"\n"+dut+"\nMatchnr "+m.nr;
+    L.push("BEGIN:VEVENT",
+      "UID:"+u.id+"-"+m.nr+"@f2013",
+      "DTSTAMP:"+icsStamp(TODAY,"08:00")+"Z",
+      "DTSTART:"+icsStamp(u.date,m.t),
+      "DTEND:"+icsStamp(u.date,m.t,MATCH_MIN),
+      "SUMMARY:"+esc(m.h+" – "+m.a),
+      "LOCATION:"+esc(u.venue),
+      "DESCRIPTION:"+esc(desc),
+      "BEGIN:VALARM","TRIGGER:-PT2H","ACTION:DISPLAY",
+      "DESCRIPTION:"+esc(m.h+" – "+m.a),"END:VALARM","END:VEVENT");
+  }
+  L.push("END:VCALENDAR");
+  return L.join("\r\n");
+}
+function download(name,text,mime){
+  const b=new Blob(["\uFEFF"+text],{type:(mime||"text/plain")+";charset=utf-8"});
+  const a=document.createElement("a");
+  a.href=URL.createObjectURL(b); a.download=name; a.click();
+  setTimeout(()=>URL.revokeObjectURL(a.href),4000);
+}
+
+/* ---------- hero ---------- */
+function renderHero(){
+  const pu=pubUnits();
+  const el=document.getElementById("hero");
+  if(!pu.length){
+    el.className="hero";
+    el.innerHTML='<div class="wrap"><p class="kicker">Spelschema</p>'+
+      '<h1>Inget publicerat än</h1><p class="venue">Tränaren lägger ut en månad i taget. '+
+      'Håll utkik – nästa månads matcher dyker upp här.</p></div>';
+    return; }
+  const u=pu.find(x=>x.date>=TODAY)||pu[pu.length-1], m=u.m[0], sq=squads[u.id]||[];
+  el.className="hero"+(u.lvl==="L"?" easy":"");
+  let status;
+  if(me!==null){ const inSq=sq.includes(me);
+    status='<div class="hero-status'+(inSq?"":" out")+'"><span class="dot"></span>'+
+      (inSq?nameOf(byId[me])+" är uttagen":nameOf(byId[me])+" är ledig den dagen")+'</div>'; }
+  else status='<div class="hero-status"><span class="dot"></span>Välj din spelare uppe till höger</div>';
+  const led=leadersOf(u.id);
+  const md=myDuty(u.id);
+  if(md) status+='<div class="hero-status" style="margin-left:8px"><span class="dot" '+
+    'style="background:#F0C46A"></span>Ert uppdrag: '+md+'</div>';
+  const extra=u.m.length>1?" + "+(u.m.length-1)+" match till samma dag":"";
+  el.innerHTML=
+    '<svg class="arc" viewBox="0 0 100 100" aria-hidden="true">'+
+    '<path d="M100 0 A100 100 0 0 0 0 100" fill="none" stroke="#fff" stroke-width="1.1" stroke-dasharray="4 3"/>'+
+    '<path d="M100 22 A78 78 0 0 0 22 100" fill="none" stroke="#fff" stroke-width="1.1"/></svg>'+
+    '<div class="wrap"><p class="kicker">Nästa match</p>'+
+    '<div class="hero-date">'+u.day.toLowerCase()+" "+fmtDate(u.date)+" · "+m.t+extra+'</div>'+
+    '<h1>'+m.h+' – '+m.a+'</h1>'+
+    '<p class="venue">'+u.venue+(led.length?" · ledare "+led.join(", "):"")+'</p>'+status+
+    '<div class="hero-acts"><button class="hero-cta" data-jump="'+u.id+'">Se hela truppen</button>'+
+    '<button class="hero-cta" data-ics="'+u.id+'">Lägg till i kalendern</button></div></div>';
+}
+
+/* ---------- matchlista ---------- */
+function squadPanel(u){
+  const sq=[...gksOf(u.id),...fldOf(u.id)];
+  const groups=["MV","nia","sexa","kant"].map(r=>{
+    const l=sq.filter(p=>p.role===r); if(!l.length) return "";
+    l.sort((a,b)=>a.f.localeCompare(b.f,"sv"));
+    return '<div class="sqrow"><div class="sqrole">'+ROLE_LABEL[r]+'</div><div class="sqnames">'+
+      l.map(p=>'<span class="pill'+(p.role==="MV"?" gk":"")+(p.i===me?" me":"")+'">'+
+        nameOf(p)+'</span>').join("")+'</div></div>'; }).join("");
+  const led=leadersOf(u.id);
+  const ledHtml='<div class="leadrow"><div class="sqrole">Ledare</div><div class="sqnames">'+
+    (led.length?led.map(n=>'<span class="lead">'+n+'</span>').join("")
+               :'<span class="lead none">Ingen ledare utsedd</span>')+'</div></div>';
+  const need=dutyNeed(u);
+  const dutyHtml='<div class="dutyhd"><h4>'+(u.home?"Föräldrauppdrag hemma":"Körning till bortamatch")+
+    '</h4><span>namnet är barnets</span></div>'+
+    Object.keys(need).map(r=>{
+      const got=dutyOf(u.id,r);
+      return '<div class="dutyrow"><div class="sqrole">'+r+'</div><div class="sqnames">'+
+        (got.length?got.map(i=>'<span class="duty'+(i===me?" me":"")+'">'+
+          nameOf(byId[i])+'</span>').join("")
+         :'<span class="duty none">ingen tillsatt</span>')+'</div></div>'; }).join("");
+  const times=u.m.map(m=>m.t+" "+m.h+" – "+m.a).join("<br>");
+  return '<div class="squad">'+groups+ledHtml+dutyHtml+
+    '<div class="sqfoot"><span>'+sq.length+' spelare'+
+      (u.m.length>1?' · samma trupp i båda matcherna':'')+'</span>'+
+      '<button class="link" data-ics="'+u.id+'">Lägg till i kalendern</button>'+
+      '<button class="link" data-copy="'+u.id+'">Kopiera som text</button></div>'+
+    '<div class="sqfoot" style="border:0;padding-top:0;margin-top:2px">'+times+'</div></div>';
+}
+
+function renderMatches(){
+  let list=pubUnits();
+  if(mineOnly&&me!==null) list=list.filter(u=>(squads[u.id]||[]).includes(me));
+  const pending=monthList().filter(x=>!published[x.k]&&!x.past);
+  let html='<div class="bar">'+
+    '<button class="chip" id="f-mine" aria-pressed="'+mineOnly+'"'+
+      (me===null?' disabled style="opacity:.45"':'')+'>Bara min spelares matcher</button>'+
+    '<button class="chip" id="ics-all">Lägg alla i kalendern</button>'+
+    '<span class="note">'+list.reduce((a,u)=>a+gamesIn(u),0)+' matcher</span></div>'+
+    (()=>{ const r=record(list); return r.n
+      ? '<div class="bar" style="padding-top:0"><span class="note" style="margin:0">'+
+        r.n+' spelade · '+r.V+' vinster, '+r.O+' oavgjorda, '+r.F+' förluster · '+
+        'mål '+r.gf+'–'+r.ga+'</span></div>' : ""; })();
+  if(!list.length){
+    document.getElementById("main").innerHTML=html+
+      '<div class="empty">'+(pubUnits().length
+        ? "Inga matcher att visa. Välj en spelare eller stäng av filtret."
+        : "Inget är publicerat än. Tränaren lägger ut en månad i taget.")+'</div>';
+    return; }
+  let month="";
+  for(const u of list){
+    const [y,mo]=u.date.split("-").map(Number), key=MONTHS[mo-1]+" "+y;
+    if(key!==month){ month=key; html+='<div class="month">'+key+'</div><div class="courtline"></div>'; }
+    const mine=me!==null&&(squads[u.id]||[]).includes(me), open=openUnit===u.id;
+    html+='<div class="match'+(u.lvl==="L"?" easy":"")+(u.date<TODAY?" past":"")+
+      '" data-open="'+open+'" data-unit="'+u.id+'">'+
+      '<button class="mhead" data-toggle="'+u.id+'" aria-expanded="'+open+'">'+
+        '<div><div class="daynum">'+Number(u.date.slice(8))+'</div>'+
+        '<div class="daywd">'+weekday(u)+'</div></div>'+
+        '<div class="mbody"><div class="mteams">'+u.m.map(m=>{
+            const x=outcome(m);
+            return m.h+" – "+m.a+(x?' <span class="score '+x.res+'">'+
+              resOf(m).h+"–"+resOf(m).a+'</span>':""); }).join("<br>")+'</div>'+
+        '<div class="mmeta">'+u.m.map(m=>m.t).join(", ")+' · '+u.venue+'</div></div>'+
+        '<div class="mright">'+
+          (me!==null?'<span class="mine-dot'+(mine?"":" out")+'"><i></i>'+
+            (mine?"spelar":"ledig")+'</span>':'')+
+          (myDuty(u.id)?'<span class="mine-duty">'+myDuty(u.id)+'</span>':'')+
+          (isEdited(u.id)?'<span class="edited">ändrad</span>':'')+
+          '<span class="chev">▶</span></div></button>'+
+      squadPanel(u)+'</div>';
+  }
+  if(pending.length)
+    html+='<div class="empty" style="margin-top:20px">Kommande månader läggs ut efterhand. '+
+      'Nästa på tur: '+monthName(pending[0].k)+'.</div>';
+  document.getElementById("main").innerHTML=html;
+}
+
+/* ---------- spelare ---------- */
+function renderPlayers(){
+  const rows=[...P].sort((a,b)=>(a.pos==="MV")-(b.pos==="MV")||a.f.localeCompare(b.f,"sv"));
+  const max=Math.max(1,...P.map(p=>counts(p.i,true).t));
+  const pubM=monthList().filter(x=>published[x.k]).map(x=>monthName(x.k));
+  let html='<div class="bar"><span class="note">Räknat på publicerade matcher'+
+    (pubM.length?" ("+pubM.join(", ")+")":"")+'</span></div><div class="plist">';
+  for(const p of rows){ const c=counts(p.i,true);
+    html+='<button class="prow" data-me="'+p.i+'">'+
+      '<span class="pname">'+nameOf(p)+
+        (p.i===me?' <span style="color:var(--blue);font-size:13px">· min spelare</span>':'')+'</span>'+
+      '<span class="ppos">'+p.pos+'</span>'+
+      '<span class="pbar"><i style="width:'+(c.s/max*100)+'%;background:var(--blue)"></i>'+
+        '<i style="width:'+(c.l/max*100)+'%;background:var(--green)"></i></span>'+
+      '<span class="pcount">'+c.t+'<small>matcher</small></span>'+
+      '<span class="pcount" style="color:var(--amber)">'+dutyCount(p.i,true)+
+        '<small>uppdrag</small></span></button>'; }
+  html+='</div><div class="bar"><span class="note">'+
+    '<span class="swatch" style="background:var(--blue)"></span>blå serie&nbsp;&nbsp;'+
+    '<span class="swatch" style="background:var(--green)"></span>grön serie</span></div>';
+  document.getElementById("main").innerHTML=html;
+}
+
+/* ---------- tränarläge ---------- */
+function renderLock(){
+  document.getElementById("main").innerHTML=
+    '<div class="panel lock"><h3>Tränarläge</h3>'+
+    '<p class="sub">Skriv lösenordet för att redigera trupper.</p>'+
+    '<input class="full" type="password" id="pw" autocomplete="current-password" placeholder="Lösenord">'+
+    '<div class="btnrow"><button class="btn" id="unlock">Lås upp</button></div></div>';
+  setTimeout(()=>document.getElementById("pw")?.focus(),50);
+}
+
+function renderCoach(){
+  if(!unlocked) return renderLock();
+  if(!editUnit) editUnit=(U.find(u=>u.date>=TODAY)||U[0]).id;
+  const u=unitOf(editUnit), R=RULES[u.lvl];
+  const sq=squads[u.id]||[];
+  const opts=U.map(x=>'<option value="'+x.id+'"'+(x.id===editUnit?" selected":"")+'>'+
+    fmtDate(x.date)+" · "+(x.lvl==="S"?"Svår":"Lätt")+" · "+
+    x.m.map(m=>m.h+" – "+m.a).join(" / ")+
+    (isPub(x)?"":"  [utkast]")+(isEdited(x.id)?"  (ändrad)":"")+'</option>').join("");
+
+  const C=Object.fromEntries(P.map(p=>[p.i,counts(p.i)]));
+  const fldTot=P.filter(p=>p.pos!=="MV").map(p=>C[p.i].t).sort((a,b)=>a-b);
+  const gkTot =P.filter(p=>p.pos==="MV").map(p=>C[p.i].t).sort((a,b)=>a-b);
+  const med=a=>a.length?a[Math.floor(a.length/2)]:0;
+  const target={fld:med(fldTot), gk:med(gkTot)};
+
+  let picks="";
+  for(const r of ["MV","nia","sexa","kant"]){
+    let list=P.filter(p=>p.role===r);
+    list.sort(sortByCount ? (a,b)=>C[a.i].t-C[b.i].t||a.f.localeCompare(b.f,"sv")
+                          : (a,b)=>a.avg-b.avg||a.f.localeCompare(b.f,"sv"));
+    picks+='<div class="grouphd">'+ROLE_LABEL[r]+'</div><div class="grid">'+
+      list.map(p=>{ const on=sq.includes(p.i);
+        const wrong=(p.grp==="A"&&u.lvl==="L")||(p.grp==="D"&&u.lvl==="S");
+        const c=C[p.i], tg=p.pos==="MV"?target.gk:target.fld;
+        const cls=c.t<tg-1?" low":c.t>tg+1?" high":"";
+        const meta=[LEAD_BY_ID[p.i]?"ledare "+LEAD_BY_ID[p.i]:"",
+                    c.s+" svåra · "+c.l+" lätta",
+                    showLevels?"nivå "+p.avg:""].filter(Boolean).join(" · ");
+        return '<button class="pick'+(r==="MV"?" gk":"")+(wrong&&!on?" dim":"")+
+          '" aria-pressed="'+on+'" data-pick="'+p.i+'" title="'+c.t+' matcher totalt">'+
+          '<span class="txt"><span class="nm">'+nameOf(p)+'</span>'+
+          '<span class="meta">'+meta+'</span></span>'+
+          '<span class="cnt'+cls+'">'+c.t+'</span></button>'; }).join("")+'</div>';
+  }
+  const scale='<div class="scale"><span>Siffran är spelarens totala antal matcher i säsongen.</span>'+
+    '<span style="color:var(--green)">under snittet</span>'+
+    '<span style="color:var(--amber)">över snittet</span></div>';
+  const probs=problems(u.id);
+  const led=leadersOf(u.id);
+  document.getElementById("main").innerHTML=
+    pubPanel()+resPanel()+
+    '<div class="panel"><h3>Redigera trupp</h3>'+
+    '<p class="sub">'+(isPub(u)
+      ? "Den här månaden är publicerad – ändringar syns direkt för föräldrarna."
+      : "Den här månaden är ett utkast och syns inte för föräldrarna än.")+'</p>'+
+    '<select class="full" id="unitsel">'+opts+'</select>'+
+    '<div class="bar"><span class="note" style="margin:0">'+fldOf(u.id).length+' av '+R.field+
+      ' utespelare · '+gksOf(u.id).length+' målvakt'+(gksOf(u.id).length===1?"":"er")+
+      ' · ledare '+(led.length?led.join(", "):"saknas")+'</span>'+
+      '<label class="toggle" style="margin-left:auto"><input type="checkbox" id="lvtog"'+
+      (showLevels?" checked":"")+'>Visa nivåer</label>'+
+      '<button class="chip" id="sortcnt" aria-pressed="'+sortByCount+
+      '">Sortera efter antal matcher</button></div>'+
+    (probs.length?probs.map(t=>'<div class="warn">'+t+'</div>').join("")
+                 :'<div class="warn ok">Truppen uppfyller alla regler.</div>')+
+    picks+scale+dutyEditor(u)+
+    '<div class="btnrow">'+
+      '<button class="btn ghost" id="reset">Återställ den här matchen</button>'+
+      '<button class="btn ghost" id="export">Ladda ner alla trupper (CSV)</button>'+
+      '<button class="btn ghost" id="resetall">Återställ hela schemat</button>'+
+      '<button class="btn ghost" id="lock">Lås tränarläget</button>'+
+    '</div></div>'+
+    '<div class="panel"><h3>Lösenord</h3>'+
+    '<p class="sub">Byt lösenord för tränarläget. Det gäller för alla direkt.</p>'+
+    '<input class="full" type="password" id="newpw" placeholder="Nytt lösenord">'+
+    '<div class="btnrow"><button class="btn ghost" id="setpw">Spara nytt lösenord</button></div>'+
+    '<p class="sub" style="margin:12px 0 0">Lösenordet hindrar råkade ändringar, inte en '+
+    'beslutsam person. Allt körs i webbläsaren och den som kan läsa sidans källkod kan ta sig förbi.</p>'+
+    '</div>'+
+    '<div class="panel"><h3>Nivåer syns inte för föräldrar</h3>'+
+    '<p class="sub" style="margin:0">Flikarna Matcher och Spelare visar varken nivåsiffror eller '+
+    'om en match är svår eller lätt. Serierna skiljs bara åt med blå och grön färg.</p></div>';
+}
+
+function dutyEditor(u){
+  const need=dutyNeed(u), el=eligDuty(u.id);
+  const cnts=Object.fromEntries(P.map(p=>[p.i,dutyCount(p.i)]));
+  const vals=P.filter(p=>!LEAD_BY_ID[p.i]).map(p=>cnts[p.i]).sort((a,b)=>a-b);
+  const med=vals[Math.floor(vals.length/2)]||0;
+  let h='<div class="dutyhd" style="margin-top:18px"><h4>'+
+    (u.home?"Föräldrauppdrag – hemmamatch":"Körning – bortamatch")+
+    '</h4><span>bara föräldrar vars barn spelar, ledare undantagna</span></div>';
+  for(const r of Object.keys(need)){
+    const got=dutyOf(u.id,r);
+    h+='<div class="grouphd">'+r+' <span style="color:'+
+      (got.length===need[r]?"var(--green)":"var(--alert)")+'">'+got.length+'/'+need[r]+'</span></div>'+
+      '<div class="dsel">'+
+      el.slice().sort((a,b)=>cnts[a]-cnts[b]||byId[a].f.localeCompare(byId[b].f,"sv"))
+        .map(i=>{ const on=got.includes(i);
+          const busy=!on&&Object.keys(need).some(o=>dutyOf(u.id,o).includes(i));
+          return '<button class="dbtn" aria-pressed="'+on+'" data-duty="'+r+'|'+i+'"'+
+            (busy?' style="opacity:.4"':'')+'>'+nameOf(byId[i])+
+            '<small>'+cnts[i]+(cnts[i]<med?" ↓":cnts[i]>med?" ↑":"")+'</small></button>'; }).join("")+
+      '</div>';
+  }
+  return h;
+}
+
+function pubPanel(){
+  const ms=monthList();
+  const next=ms.find(x=>!published[x.k]&&!x.past);
+  return '<div class="panel"><h3>Publicering</h3>'+
+    '<p class="sub">Föräldrar ser bara publicerade månader. Resten av säsongen ligger kvar '+
+    'som underlag men syns inte.</p>'+
+    ms.map(x=>{ const on=published[x.k]===true;
+      return '<div class="pubrow"><span class="pubname'+(x.past?" past":"")+'">'+
+        monthName(x.k)+'</span><span class="pubmeta">'+x.games+' matcher</span>'+
+        '<button class="dbtn" aria-pressed="'+on+'" data-pub="'+x.k+'">'+
+        (on?"Publicerad":"Utkast")+'</button></div>'; }).join("")+
+    (next?'<div class="btnrow"><button class="btn" data-pub="'+next.k+'">Publicera '+
+      monthName(next.k)+'</button></div>':"")+
+    '<p class="sub" style="margin:14px 0 0">Ändrar du en trupp i en publicerad månad syns '+
+    'det direkt för föräldrarna.</p></div>';
+}
+
+function resPanel(){
+  const past=[];
+  for(const u of U) for(const m of u.m) if(u.date<=TODAY) past.push([u,m]);
+  past.sort((a,b)=>b[0].date.localeCompare(a[0].date)||b[1].t.localeCompare(a[1].t));
+  const rows=past.slice(0,24).map(([u,m])=>{
+    const r=resOf(m)||{};
+    return '<div class="resrow"><span class="rd">'+fmtDate(u.date)+'</span>'+
+      '<span class="rm">'+m.h+" – "+m.a+'</span>'+
+      '<input type="number" min="0" max="99" data-res="'+m.nr+'|h" value="'+
+        (r.h!==undefined?r.h:"")+'"><span class="sep">–</span>'+
+      '<input type="number" min="0" max="99" data-res="'+m.nr+'|a" value="'+
+        (r.a!==undefined?r.a:"")+'"></div>'; }).join("");
+  const r=record(U);
+  return '<div class="panel"><h3>Resultat</h3>'+
+    '<p class="sub">Fyll i slutresultatet så syns det för föräldrarna direkt. '+
+    'Hemmalaget först.'+(r.n?' Hittills: '+r.V+"–"+r.O+"–"+r.F+' ('+r.gf+"–"+r.ga+' mål).':'')+'</p>'+
+    (rows?'<div class="reslist">'+rows+'</div>'
+        :'<p class="sub" style="margin:0">Inga spelade matcher än.</p>')+
+    '<div class="grouphd">Klistra in från Profixio</div>'+
+    '<p class="sub" style="margin:0 0 6px">Kör hamta_resultat.py och klistra in JSON-utdata här.</p>'+
+    '<textarea class="full" id="resjson" placeholder=\'{"26 5 1341 004": [18, 14]}\'></textarea>'+
+    '<div class="btnrow"><button class="btn ghost" id="respaste">Läs in resultat</button>'+
+    '<button class="btn ghost" id="rescopy">Kopiera alla resultat</button></div></div>';
+}
+
+/* ---------- render ---------- */
+function render(){
+  renderHero();
+  document.querySelectorAll(".tab").forEach(t=>t.setAttribute("aria-selected",t.dataset.view===view));
+  view==="matcher"?renderMatches():view==="spelare"?renderPlayers():renderCoach();
+}
+function renderPicker(){
+  document.getElementById("me").innerHTML='<option value="">– ingen –</option>'+
+    [...P].sort((a,b)=>a.f.localeCompare(b.f,"sv"))
+      .map(p=>'<option value="'+p.i+'"'+(p.i===me?" selected":"")+'>'+nameOf(p)+'</option>').join("");
+}
+
+/* ---------- händelser ---------- */
+document.addEventListener("click", async e => {
+  if(e.target.id==="installsheet"||e.target.id==="sheetclose"){
+    document.getElementById("installsheet")?.remove(); return; }
+  const t=e.target.closest("[data-toggle],[data-jump],[data-copy],[data-ics],[data-me],.tab,"+
+    "#f-mine,#ics-all,[data-pick],[data-duty],[data-pub],#reset,#resetall,#export,#unlock,"+
+    "#lock,#setpw,#install,#sortcnt,#respaste,#rescopy");
+  if(!t) return;
+
+  if(t.id==="install"){
+    if(deferredPrompt){ deferredPrompt.prompt(); const r=await deferredPrompt.userChoice;
+      deferredPrompt=null; if(r.outcome!=="accepted") t.hidden=false; else t.hidden=true; }
+    else iosSheet();
+    return; }
+  if(t.id==="sortcnt"){ sortByCount=!sortByCount; renderCoach(); return; }
+
+  if(t.classList.contains("tab")){ view=t.dataset.view; render(); window.scrollTo({top:0}); return; }
+  if(t.dataset.toggle){ openUnit=openUnit===t.dataset.toggle?null:t.dataset.toggle;
+    renderMatches(); return; }
+  if(t.dataset.jump){ view="matcher"; openUnit=t.dataset.jump; render();
+    setTimeout(()=>document.querySelector('[data-unit="'+t.dataset.jump+'"]')
+      ?.scrollIntoView({behavior:"smooth",block:"center"}),60); return; }
+  if(t.id==="f-mine"){ mineOnly=!mineOnly; renderMatches(); return; }
+
+  if(t.dataset.ics){ const u=unitOf(t.dataset.ics);
+    download("match-"+u.date+".ics", icsEvents([u]), "text/calendar");
+    toast("Kalenderfil nedladdad – öppna den för att lägga till"); return; }
+  if(t.id==="ics-all"){
+    let list=pubUnits();
+    if(mineOnly&&me!==null) list=list.filter(u=>(squads[u.id]||[]).includes(me));
+    download("f2013-matcher.ics", icsEvents(list), "text/calendar");
+    toast(list.reduce((a,u)=>a+u.m.length,0)+" matcher i kalenderfilen"); return; }
+
+  if(t.dataset.copy){ const u=unitOf(t.dataset.copy), sq=[...gksOf(u.id),...fldOf(u.id)];
+    const led=leadersOf(u.id);
+    const txt=u.m.map(m=>m.h+" – "+m.a+"  "+u.day.toLowerCase()+" "+fmtDate(u.date)+" "+m.t).join("\n")+
+      "\n"+u.venue+"\n\nTrupp:\n"+
+      ["MV","nia","sexa","kant"].map(r=>{ const l=sq.filter(p=>p.role===r);
+        return l.length?ROLE_LABEL[r]+": "+l.map(nameOf).join(", "):""; }).filter(Boolean).join("\n")+
+      "\n\nLedare: "+(led.length?led.join(", "):"saknas")+
+      "\n\n"+(u.home?"Föräldrauppdrag:":"Körning:")+"\n"+
+      Object.keys(dutyNeed(u)).map(r=>r+": "+
+        (dutyOf(u.id,r).map(i=>nameOf(byId[i])).join(", ")||"ingen tillsatt")).join("\n");
+    try{ await navigator.clipboard.writeText(txt); toast("Truppen kopierad"); }
+    catch(err){ toast("Kunde inte kopiera – markera texten manuellt"); }
+    return; }
+
+  if(t.dataset.me!==undefined){ me=Number(t.dataset.me); renderPicker();
+    await sSet(KEY_ME,String(me),false); view="matcher"; render(); window.scrollTo({top:0}); return; }
+
+  if(t.id==="unlock"){
+    const v=document.getElementById("pw").value;
+    if(await sha(v)===pwHash){ unlocked=true; await sSet(KEY_UNLK,"1",false); renderCoach(); }
+    else toast("Fel lösenord");
+    return; }
+  if(t.id==="lock"){ unlocked=false; await sSet(KEY_UNLK,"",false); renderCoach();
+    toast("Tränarläget låst"); return; }
+  if(t.id==="setpw"){
+    const v=document.getElementById("newpw").value.trim();
+    if(v.length<4){ toast("Välj minst fyra tecken"); return; }
+    pwHash=await sha(v); await sSet(KEY_PW,pwHash,true);
+    document.getElementById("newpw").value=""; toast("Lösenordet är bytt"); return; }
+
+  if(!unlocked) return;
+  if(t.dataset.pick!==undefined){
+    const pid=Number(t.dataset.pick), sq=squads[editUnit]||(squads[editUnit]=[]);
+    const i=sq.indexOf(pid); i>=0?sq.splice(i,1):sq.push(pid);
+    await sSet(KEY_SQ,JSON.stringify(squads),true); renderCoach(); renderHero(); return; }
+  if(t.id==="respaste"){
+    const el=document.getElementById("resjson");
+    try{
+      const o=JSON.parse(el.value);
+      let n=0;
+      for(const k of Object.keys(o)){
+        const v=o[k];
+        const h=Array.isArray(v)?v[0]:v.h, a=Array.isArray(v)?v[1]:v.a;
+        if(h===null||a===null||h===undefined||a===undefined) continue;
+        results[k]={h:Number(h),a:Number(a)}; n++;
+      }
+      await sSet(KEY_RES,JSON.stringify(results),true);
+      el.value=""; renderCoach(); toast(n+" resultat inlästa");
+    }catch(err){ toast("Kunde inte tolka texten som JSON"); }
+    return; }
+  if(t.id==="rescopy"){
+    try{ await navigator.clipboard.writeText(JSON.stringify(results,null,1));
+      toast("Resultaten kopierade"); }catch(e){ toast("Kunde inte kopiera"); }
+    return; }
+  if(t.dataset.pub!==undefined){
+    const k=t.dataset.pub; published[k]=!published[k];
+    await sSet(KEY_PUB,JSON.stringify(published),true);
+    renderCoach(); renderHero();
+    toast(published[k]?monthName(k)+" är publicerad":monthName(k)+" är dold igen"); return; }
+  if(t.dataset.duty!==undefined){
+    const [r,idS]=t.dataset.duty.split("|"), pid=Number(idS);
+    const u=unitOf(editUnit), need=dutyNeed(u);
+    duties[editUnit]=duties[editUnit]||{};
+    const arr=duties[editUnit][r]=duties[editUnit][r]||[];
+    const at=arr.indexOf(pid);
+    if(at>=0) arr.splice(at,1);
+    else{
+      for(const o of Object.keys(need)){         // en förälder, ett uppdrag per dag
+        const a2=duties[editUnit][o]; if(!a2) continue;
+        const k=a2.indexOf(pid); if(k>=0) a2.splice(k,1);
+      }
+      arr.push(pid);
+    }
+    await sSet(KEY_DU,JSON.stringify(duties),true); renderCoach(); renderHero(); return; }
+  if(t.id==="reset"){ squads[editUnit]=[...base[editUnit]];
+    duties[editUnit]=JSON.parse(JSON.stringify(dbase[editUnit]));
+    await sSet(KEY_SQ,JSON.stringify(squads),true);
+    await sSet(KEY_DU,JSON.stringify(duties),true);
+    renderCoach(); renderHero(); toast("Matchen återställd"); return; }
+  if(t.id==="resetall"){ squads=JSON.parse(JSON.stringify(base));
+    duties=JSON.parse(JSON.stringify(dbase));
+    await sSet(KEY_SQ,JSON.stringify(squads),true);
+    await sSet(KEY_DU,JSON.stringify(duties),true);
+    render(); toast("Hela schemat återställt"); return; }
+  if(t.id==="export"){
+    const rows=[["Truppenhet","Datum","Serie","Hemma/borta","Match","Spelare","Position",
+      "Ledare","Uppdrag","Publicerad","Resultat"].join(";")];
+    for(const u of U){ const led=leadersOf(u.id).join(" / ");
+      const rr={}; for(const r of Object.keys(dutyNeed(u))) for(const i of dutyOf(u.id,r)) rr[i]=r;
+      for(const i of [...(squads[u.id]||[])].sort((a,b)=>a-b))
+        rows.push([u.id,u.date,u.lvl==="S"?"Svår":"Lätt",u.home?"Hemma":"Borta",
+          u.m.map(m=>m.h+" – "+m.a).join(" / "),
+          fullOf(byId[i]),byId[i].pos,led,rr[i]||"",isPub(u)?"Ja":"Nej",
+          u.m.map(m=>resOf(m)?resOf(m).h+"-"+resOf(m).a:"").filter(Boolean).join(" / ")
+          ].join(";")); }
+    download("f2013_trupper.csv",rows.join("\n"),"text/csv"); toast("CSV nedladdad"); return; }
+});
+
+document.addEventListener("keydown", e => {
+  if(e.key==="Enter"&&e.target.id==="pw") document.getElementById("unlock")?.click();
+  if(e.key==="Enter"&&e.target.id==="newpw") document.getElementById("setpw")?.click();
+});
+
+document.addEventListener("change", async e => {
+  if(e.target.id==="me"){ me=e.target.value===""?null:Number(e.target.value);
+    await sSet(KEY_ME,e.target.value,false); if(me===null) mineOnly=false; render(); return; }
+  if(e.target.id==="unitsel"){ editUnit=e.target.value; renderCoach(); return; }
+  if(e.target.id==="lvtog"){ showLevels=e.target.checked; renderCoach(); return; }
+  if(e.target.dataset && e.target.dataset.res!==undefined){
+    const [nr,side]=e.target.dataset.res.split("|");
+    const v=e.target.value.trim();
+    const cur=results[nr]||{};
+    if(v==="") delete cur[side]; else cur[side]=Number(v);
+    if(cur.h===undefined&&cur.a===undefined) delete results[nr]; else results[nr]=cur;
+    await sSet(KEY_RES,JSON.stringify(results),true);
+    renderHero(); return; }
+});
+
+/* ---------- installera på hemskärmen ---------- */
+let deferredPrompt=null;
+const isStandalone = window.matchMedia("(display-mode: standalone)").matches ||
+                     window.navigator.standalone === true;
+const isiOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+
+function buildManifest(){
+  try{
+    const icon="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'"+
+      "%3E%3Crect width='512' height='512' fill='%230E3B5C'/%3E%3Ctext x='256' y='310' "+
+      "font-family='Arial' font-weight='700' font-size='190' fill='%23fff' text-anchor='middle'"+
+      "%3EF13%3C/text%3E%3C/svg%3E";
+    const mf={name:"F2013 Spelschema",short_name:"F2013",start_url:location.href,
+      display:"standalone",background_color:"#F3EEE3",theme_color:"#0E3B5C",
+      icons:[{src:icon,sizes:"512x512",type:"image/svg+xml",purpose:"any maskable"}]};
+    const url=URL.createObjectURL(new Blob([JSON.stringify(mf)],{type:"application/manifest+json"}));
+    const l=document.createElement("link"); l.rel="manifest"; l.href=url;
+    document.head.appendChild(l);
+  }catch(e){}
+}
+
+window.addEventListener("beforeinstallprompt", e => {
+  e.preventDefault(); deferredPrompt=e;
+  const b=document.getElementById("install"); if(b) b.hidden=false;
+});
+window.addEventListener("appinstalled", () => {
+  const b=document.getElementById("install"); if(b) b.hidden=true;
+  toast("Tillagd på hemskärmen");
+});
+
+function iosSheet(){
+  const el=document.createElement("div");
+  el.className="sheet"; el.id="installsheet";
+  el.innerHTML='<div class="card"><h3>Lägg till på hemskärmen</h3>'+
+    '<p class="sub" style="margin:0">Då öppnas schemat som en app, utan adressfält.</p>'+
+    '<ol><li>Tryck på dela-ikonen <span class="shareicon"></span> längst ned i Safari.</li>'+
+    '<li>Bläddra ned och välj <b>Lägg till på hemskärmen</b>.</li>'+
+    '<li>Tryck <b>Lägg till</b>.</li></ol>'+
+    '<div class="btnrow"><button class="btn" id="sheetclose">Stäng</button></div></div>';
+  document.body.appendChild(el);
+}
+
+/* ---------- start ---------- */
+(async function init(){
+  base=Object.fromEntries(U.map(u=>[u.id,[...u.sq]]));
+  squads=JSON.parse(JSON.stringify(base));
+  dbase=Object.fromEntries(U.map(u=>[u.id,JSON.parse(JSON.stringify(u.duty))]));
+  duties=JSON.parse(JSON.stringify(dbase));
+  const savedD=await sGet(KEY_DU,true);
+  if(savedD){ try{ const s2=JSON.parse(savedD);
+    for(const k of Object.keys(dbase)) if(s2[k]) duties[k]=s2[k]; }catch(e){} }
+  const saved=await sGet(KEY_SQ,true);
+  if(saved){ try{ const s=JSON.parse(saved);
+    for(const k of Object.keys(base)) if(Array.isArray(s[k])) squads[k]=s[k]; }catch(e){} }
+  const savedP=await sGet(KEY_PUB,true);
+  if(savedP){ try{ published=JSON.parse(savedP)||{}; }catch(e){ published={}; } }
+  if(!savedP){
+    const first=monthList().find(x=>!x.past);
+    if(first){ published[first.k]=true; await sSet(KEY_PUB,JSON.stringify(published),true); }
+  }
+  const savedR=await sGet(KEY_RES,true);
+  if(savedR){ try{ results=JSON.parse(savedR)||{}; }catch(e){ results={}; } }
+  pwHash=await sGet(KEY_PW,true);
+  if(!pwHash){ pwHash=await sha(DEFAULT_PW); await sSet(KEY_PW,pwHash,true); }
+  const savedMe=await sGet(KEY_ME,false);
+  if(savedMe&&byId[Number(savedMe)]) me=Number(savedMe);
+  unlocked=(await sGet(KEY_UNLK,false))==="1";
+  renderPicker(); render();
+  buildManifest();
+  if(!isStandalone && isiOS){ const b=document.getElementById("install"); if(b) b.hidden=false; }
+})();
+</script>
+
+<footer class="wrap foot">
+  <b>Om schemat.</b> Trupperna är uträknade utifrån position och tillgänglighet, med målet att alla
+  ska få ungefär lika många matcher. Speldagar med två matcher har samma trupp i båda.
+  Ledaren är föräldern till en av spelarna i truppen. Ändringar som tränaren gör syns för alla direkt.<br>
+  Schemat läggs ut en månad i taget. Truppen sätts inför varje månad utifrån hur det ser ut
+  på träningarna, så den som tränar mycket spelar mer.<br>
+  Föräldrauppdragen fördelas bland de familjer vars barn spelar; ledarnas familjer är undantagna.
+  Namnet i uppdragslistan är barnets.<br>
+  Använd <b>Lägg till i kalendern</b> för att få matcherna i mobilens kalender med påminnelse två timmar innan.
+</footer>
